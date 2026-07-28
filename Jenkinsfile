@@ -5,20 +5,37 @@ pipeline {
 
         stage('Check Python') {
             steps {
-                sh 'python3 --version'
-                sh 'pip3 --version'
+                sh '''
+                    python3 --version
+                    pip3 --version
+                '''
+            }
+        }
+
+        stage('Create Virtual Environment') {
+            steps {
+                sh '''
+                    python3 -m venv venv
+                '''
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'python3 -m pip install -r requirements.txt'
+                sh '''
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
             }
         }
 
-        stage('Run Test') {
+        stage('Run Tests') {
             steps {
-                sh 'python3 -m pytest'
+                sh '''
+                    . venv/bin/activate
+                    pytest
+                '''
             }
         }
 
