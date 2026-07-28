@@ -1,3 +1,5 @@
+def welcome(name):
+    return f"Hello {name}, CI/CD is working!"
 
 def welcome(name):
     return f"Hello {name}, Jenkins CI Pipeline Working!"
